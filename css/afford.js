@@ -1,4 +1,7 @@
-import {StyleSheet,Platform} from 'react-native';
+import {Dimensions, StatusBar, StyleSheet,Platform} from 'react-native';
+// import {  Platform } from 'react-native';
+
+var deviceHeight = Platform.OS === 'android' ? Dimensions.get('screen').height - StatusBar.currentHeight : Dimensions.get('window').height;
 module.exports = StyleSheet.create({
   headerstyles:{
     backgroundColor:"white",
@@ -8,7 +11,16 @@ module.exports = StyleSheet.create({
     marginBottom: 3,
     
   },
+  imageStyle:{
+    height:deviceHeight<=650?70 : 130,
+    width:deviceHeight<=650?70 : 130
+  },
+  // mycont:{
+  //   width:"100%",
+  //   height:height*0.8
+  // },
   container: {
+    
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -60,7 +72,7 @@ module.exports = StyleSheet.create({
   },
   password: {
     width:250,
-    height:60,
+    height:30,
     backgroundColor:'white',
     borderWidth: 1,
     fontSize:16,
@@ -69,30 +81,56 @@ module.exports = StyleSheet.create({
     position:'relative',
     borderRadius:5,
     alignSelf:"center",
-  },dropdown_2: {
-    // alignSelf: 'flex-end',
-    width: 200,
-    marginTop: 32,
-    right: 8,
-    borderWidth: 0,
-    borderRadius: 3,
-    backgroundColor: 'cornflowerblue',
   },
-  dropdown_2_text: {
-    width:200,
-    marginVertical: 10,
-    marginHorizontal: 10,
-    fontSize: 20,
-    color: 'white',
-    textAlign: 'center',
-    textAlignVertical: 'center',
+  ViewPropertytype:{
+    justifyContent: "center",
+    padding:deviceHeight<=650?0:"5%"
   },
-  dropdown_2_dropdown: {
-    width: 200,
-    height: 300,
-    borderColor: 'cornflowerblue',
-    borderWidth: 2,
-    borderRadius: 3,
+  singlefinalImage:{ 
+    width: deviceHeight<=650?120:110,
+    height: deviceHeight<=650?90:110
   },
+  tickmark: { 
+    width: deviceHeight<=650?100:110,
+    height: deviceHeight<=650?100:110
+   },
+   page2style2:{
+     flexDirection:"row",
+     width:300,
+      alignSelf:"center",
+      marginTop:deviceHeight<=650?10:20
+   },
+   page2style3:{ 
+    width: deviceHeight<=650?120:130,
+    height: deviceHeight<=650?95:110
+  },
+  multifinalImage:{ 
+    width: deviceHeight<=650?120:110,
+    
+    height: deviceHeight<=650?90:110,
+    
+  },
+  credit:{ 
+    width: deviceHeight<=650?80:100,
+    height: deviceHeight<=650?80:100,
+    
+  },
+  page3style2:{
+    flexDirection:"row",
+    width:deviceHeight<=650?260:280,
+    alignSelf:"center",
+    marginTop:deviceHeight<=650?0:20
+  },
+  multifinalview:{
+    alignItems: 'flex-end',
+    position:"absolute",
+    right: deviceHeight<=650?10:0,
+  },
+  page3style1:{
+    flexDirection:"row",
+    width:deviceHeight<=650?260:280,
+    alignSelf:"center"
+    },
+   buttoncss:{flexDirection:"row",width:"100%",justifyContent:"center",marginTop:deviceHeight<=650?"5%":"10%", height: 60 }
 });
       

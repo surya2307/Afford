@@ -17,6 +17,12 @@ import Modal from "react-native-modal";
 import Slider from 'react-native-slider';
 import axios from 'axios';
 import styles from '../css/afford';
+import { Dimensions, StatusBar, Platform } from 'react-native';
+
+var height = Platform.OS === 'android' ? Dimensions.get('screen').height - StatusBar.currentHeight : Dimensions.get('window').height;
+var width = Platform.OS === 'android' ? Dimensions.get('screen').width : Dimensions.get('window').width;
+console.log(height);
+console.log(width);
 export default class Afford extends React.Component {
   static navigationOptions = {
     header: null
@@ -1173,7 +1179,7 @@ export default class Afford extends React.Component {
     //console.log("opoppppp...:",this.state.questions_list.Text)
     if (this.state.isReady) {
       return (
-        <Container>
+        <Container style={{}}>
           <Header style={styles.headerstyles}>
             <View style={{alignItems: 'center',flex: 1,justifyContent: 'center'}} >
               <Image 
@@ -1181,7 +1187,8 @@ export default class Afford extends React.Component {
               />
             </View>
           </Header>
-          <Content style={{}} >
+          {/* scrollEnabled={false}*/}
+          <Content contentContainerStyle={{justifyContent: 'center'}} >
             <View style={{flex: 1,flexDirection: 'column',justifyContent: "center"}}>
               {this.state.index===0 &&
 
@@ -1260,7 +1267,7 @@ export default class Afford extends React.Component {
                       </Text>
                     </View>
                   </View>
-                  <View style={{ justifyContent: "center",padding:"5%"}}>
+                  <View style={styles.ViewPropertytype}>
                     <View style={{flexDirection:"row",width:300,alignSelf:"center"}}>
                       <View style={{alignItems: 'flex-start',backgroundColor: 'white',alignSelf:"center"}}>
                         {this.state.showimage3 == false &&
@@ -1268,14 +1275,14 @@ export default class Afford extends React.Component {
                             onPress={this.handleChangeSingle.bind(this)}
                           >
                           <Image
-                            style={{ width: 110, height: 110 }}
+                            style={styles.singlefinalImage}
                             source={require('../assets/single_final.png')}
                           />
                           </TouchableOpacity>
                         }
                         {( this.state.showimage3==true )&&
                           <Image
-                          style={{ width: 110, height: 110 }}
+                          style={styles.singlefinalImage}
                           source={require('../assets/Tick_mark.png')}
                           />
                         }
@@ -1283,20 +1290,20 @@ export default class Afford extends React.Component {
                           <Text style={{fontSize:15,textAlign:"center"}}>{this.state.ques2_text1.Text}</Text>
                         </View>
                       </View>
-                      <View style={{alignItems: 'flex-end',position:"absolute",right:0}}>
+                      <View style={styles.multifinalview}>
                         {this.state.showimage4 == false &&
                           <TouchableOpacity 
                             onPress={this.handleChangeMulti.bind(this)}
                             >
                             <Image
-                              style={{ width: 110, height: 110 }}
+                              style={styles.multifinalImage}
                               source={require('../assets/multifamily_final.png')}
                             />
                           </TouchableOpacity>
                         }
                         {( this.state.showimage4==true )&&
                             <Image
-                            style={{ width: 110, height: 110 }}
+                            style={styles.multifinalImage}
                             source={require('../assets/Tick_mark.png')}
                             />
                         }
@@ -1305,21 +1312,21 @@ export default class Afford extends React.Component {
                         </View>
                       </View>
                     </View>
-                    <View style={{flexDirection:"row",width:300,alignSelf:"center",marginTop:20}}>
+                    <View style={styles.page2style2}>
                       <View style={{alignItems: 'flex-start',backgroundColor: 'white'}}>
                         {this.state.showimage5 == false &&
                           <TouchableOpacity
                             onPress={this.handleChangeCando.bind(this)}
                           >
                             <Image
-                              style={{ width: 130, height: 110 }}
+                              style={styles.page2style3}
                               source={require('../assets/cando_final.png')}
                             />
                           </TouchableOpacity>
                         }
                         {( this.state.showimage5==true )&&
                           <Image
-                          style={{ width: 130, height: 110 }}
+                          style={styles.page2style3}
                           source={require('../assets/Tick_mark.png')}
                           />
                         }
@@ -1333,14 +1340,14 @@ export default class Afford extends React.Component {
                             onPress={this.handleChangeTownHouse.bind(this)}
                             >
                             <Image
-                              style={{ width: 110, height: 110 }}
+                              style={styles.singlefinalImage}
                               source={require('../assets/townhouse_final.png')}
                             />
                             </TouchableOpacity>
                         }
                         {( this.state.showimage6==true )&&
                             <Image
-                            style={{ width: 110, height: 110 }}
+                            style={styles.singlefinalImage}
                             source={require('../assets/Tick_mark.png')}
                             />
                         }
@@ -1369,22 +1376,22 @@ export default class Afford extends React.Component {
                       </Text>
                     </View>
                   </View>
-                  <View style={{ justifyContent: "center",padding:"5%"}}>
-                    <View style={{flexDirection:"row",width:280,alignSelf:"center"}}>
+                  <View style={styles.ViewPropertytype}>
+                    <View style={styles.page3style1}>
                       <View style={{alignItems: 'flex-start',backgroundColor: 'white'}}>
                         {this.state.showimage7 == false &&
                           <TouchableOpacity
                             onPress={this.handleChangeExcellent.bind(this)}
                           >
                             <Image
-                              style={{ width: 100, height: 100 }}
+                              style={styles.credit}
                               source={require('../assets/excellent_credit.png')}
                             />
                           </TouchableOpacity>
                         }
                         {( this.state.showimage7==true )&&
                           <Image
-                          style={{ width: 100, height: 100 }}
+                          style={styles.credit}
                           source={require('../assets/Tick_mark.png')}
                           />
                         }
@@ -1398,14 +1405,14 @@ export default class Afford extends React.Component {
                             onPress={this.handleChangeGood.bind(this)}
                             >
                             <Image
-                              style={{ width: 100, height: 100 }}
+                              style={styles.credit}
                               source={require('../assets/good_credit.png')}
                             />
                           </TouchableOpacity>
                         }
                         {( this.state.showimage8==true )&&
                             <Image
-                            style={{ width: 100, height: 100 }}
+                            style={styles.credit}
                             source={require('../assets/Tick_mark.png')}
                             />
                         }
@@ -1414,21 +1421,21 @@ export default class Afford extends React.Component {
                         </View>
                       </View>
                     </View>
-                    <View style={{flexDirection:"row",width:280,alignSelf:"center",marginTop:20}}>
+                    <View style={styles.page3style2}>
                       <View style={{alignItems: 'flex-start',backgroundColor: 'white'}}>
                         {this.state.showimage9 == false &&
                           <TouchableOpacity
                             onPress={this.handleChangeFair.bind(this)}
                           >
                             <Image
-                              style={{ width: 100, height: 100 }}
+                              style={styles.credit}
                               source={require('../assets/fair_credit.png')}
                             />
                           </TouchableOpacity>
                         }
                         {( this.state.showimage9==true )&&
                           <Image
-                          style={{ width: 100, height: 100 }}
+                          style={styles.credit}
                           source={require('../assets/Tick_mark.png')}
                           />
                         }
@@ -1442,14 +1449,14 @@ export default class Afford extends React.Component {
                             onPress={this.handleChangePoor.bind(this)}
                             >
                             <Image
-                              style={{ width: 100, height: 100 }}
+                              style={styles.credit}
                               source={require('../assets/poor_credit.png')}
                             />
                           </TouchableOpacity>
                         }
                         {( this.state.showimage10==true )&&
                             <Image
-                            style={{ width: 100, height: 100 }}
+                            style={styles.credit}
                             source={require('../assets/Tick_mark.png')}
                             />
                         }
@@ -1755,16 +1762,20 @@ export default class Afford extends React.Component {
                     </View>
                   </View>
                   <View style={{}}>
-                    <TextInput  placeholder={this.state.ques13_text1.Text} placeholderTextColor={'black'} 
-                          inputStyle={{fontFamily: 'Impact'}}
+                    <TextInput 
+                          style={{fontSize: "2px", maxHeight:"15px", width:"50px", height:"15px"}}
+                          
+                          placeholder={this.state.ques13_text1.Text} 
+                          placeholderTextColor={'black'} 
+                          inputStyle={{fontFamily: 'Impact',fontSize:5}}
                           autoFocus = {true}
-                           returnKeyType = {"next"}
-                           onSubmitEditing={(event) => { 
-                            this.refs.currentCity.focus(); 
-                             }}
+                          returnKeyType = {"next"}
+                          onSubmitEditing={(event) => { 
+                             this.refs.currentCity.focus(); 
+                          }}
                           underlineColorAndroid='transparent' style={styles.password}
                           onChangeText={this.Address.bind(this) }
-                            value={this.state.address}>
+                          value={this.state.address}>
                     </TextInput>
                     {!this.state.address? 
                       <View  style={{width:250,alignSelf:"center"}}>
@@ -1919,7 +1930,7 @@ export default class Afford extends React.Component {
                   </View>
                 </View>
               }
-              <View style={{flexDirection:"row",width:"100%",justifyContent:"center",marginTop:"10%", height: 60 }}>
+              <View style={styles.buttoncss}>
               
                 <View >
                 <Display
@@ -1959,43 +1970,7 @@ export default class Afford extends React.Component {
                 </View>
                
               </View>
-              {/* <View style={{width:300,alignSelf:"center", height: 100,justifyContent: "flex-end",marginTop:"10%" }} >
-                <View style={{flexDirection:"row",alignSelf: 'center'}}>
-                  <View style={{alignItems:"flex-start",margin:"5%"}}>
-                    <Display
-                      enable={this.state.enable_back}
-                      >
-                      <Button block
-                        style={styles.back_btnstyle}
-                        onPress={this.backButtonQuick.bind(this)}>
-                        <Text>Back</Text>
-                      </Button>
-                    </Display>
-                  </View>
-                  <View style={{alignItems:"flex-end",margin:"5%"}}>
-                    <Display
-                      enable={this.state.enable_next}
-                    >
-                      <Button block
-                        style={styles.next_btnstyle}
-                        onPress={this.nextButtonQuick.bind(this)}>
-                        <Text>Next</Text>
-                      </Button>
-                    </Display>
-                  </View>
-                  <View style={{alignItems:"flex-end",margin:"5%"}}>
-                    <Display
-                      enable={this.state.enable_submit}
-                    >
-                      <Button block 
-                        style={styles.submit_btnstyle}
-                        onPress={this.SubmitButton.bind(this)}>
-                        <Text>Submit</Text>
-                      </Button>
-                    </Display>
-                  </View>
-                </View>
-              </View> */}
+              
             </View>
           </Content>
           <Footer style={{elevation: 2,borderTopWidth:0.5,backgroundColor:"white",height:60}}>
