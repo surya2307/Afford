@@ -1,3 +1,4 @@
+<script src="http://192.168.56.1:8097"></script>
 import React from 'react';
 import {  View, Image,TextInput,TouchableOpacity,Alert} from 'react-native';
 import Display from 'react-native-display';
@@ -102,6 +103,7 @@ export default class Afford extends React.Component {
       validcity:false,
       validfname:false,
       validlname:false,
+      validZipCode:false,
       //errormessages
 
       //error message for question 1
@@ -440,6 +442,7 @@ export default class Afford extends React.Component {
           validcity:false,
           validfname:false,
           validlname:false,
+          validZipCode:false,
         });
       }).catch((error) => {
          console.log(error.message);
@@ -487,6 +490,7 @@ export default class Afford extends React.Component {
           len=5;
       }
       if(len==5){
+        this.checkZip(text)   
         this.setState({
           zip:text,
           zip_data:text.toString(),
@@ -500,6 +504,36 @@ export default class Afford extends React.Component {
          })
       }  
   }
+ checkZip=async (zip) => {
+    let fetchedData=0;
+    let checkResponse=0;
+    await fetch(`https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:${zip}&key=AIzaSyC-jI6r-CfVn9xwu1YTyqhRDVp9B7RtAMw`)
+      .then((resp)=> {
+           console.log("resp", resp);
+           return resp.json();
+       })
+       .then(response=> {
+            console.log("check", response.results[0])
+            checkResponse=response.results[0];
+            return response.results[0];
+        }).then(data =>{ fetchedData=(data["address_components"])
+        // return data["address_components"]
+      })
+       .catch((err)=>{ console.log("err", err)
+        checkResponse=undefined;
+       });
+      if(checkResponse==undefined){
+      console.log("ok i am being observed");
+      this.setState({validZipCode:false,errorvalue9:"Invalid ZipCode"})
+      console.log(this.state.validZipCode);
+      } 
+      else{
+        this.setState({errorvalue9:"",city:fetchedData[1]["long_name"],property:fetchedData[fetchedData.length-2]["long_name"],validZipCode:true})
+        console.log("city",this.state.city,
+        "state",this.state.property);
+      }
+      console.log(fetchedData)
+   }
   FName(text){
     this.checkValidfname(text);
     this.setState({
@@ -711,14 +745,14 @@ export default class Afford extends React.Component {
           //enable_back:false
         })
       }
-      if(this.state.index==12 && ((this.state.zip).toString().length)<5 ){
+      if(this.state.index==12 && ((this.state.zip).toString().length)<5 && this.state.validZipCode==false){
         this.setState({
           errorvalue9:"Enter Valid Zip Code",
           //index:0,
           //enable_back:false
         })
       }
-      if(this.state.index==12 && (this.state.address && this.state.zip && this.state.validcity && ((this.state.zip.toString().length)<5)==false)){
+      if(this.state.index==12 && (this.state.address && this.state.validZipCode && this.state.zip && this.state.validcity && ((this.state.zip.toString().length)<5)==false)){
         this.setState({
           errorvalue8:"",
           cityerrorvalue:"",
@@ -1205,24 +1239,24 @@ export default class Afford extends React.Component {
                     </View>
                   </View>
                   <View style={{ justifyContent: "center",padding:"7%"}}>
-                    <View style={{flexDirection:"row",width:300,alignSelf:"center"}}>
+                    <View style={styles.viewrifan}>
                       <View style={{alignItems: 'flex-start',backgroundColor: 'white'}}>
                         {this.state.showimage1 == false &&
                           <TouchableOpacity onPress={this.handleChangeRefinance.bind(this)}>
                             <Image
-                              style={{ width: 130, height: 130 }}
+                              style={styles.refinance}
                               source={require('../assets/refinance_final.png')}
                             />
                           </TouchableOpacity>
                         }
                         {( this.state.showimage1==true )&&
                           <Image
-                          style={{ width: 130, height: 130 }}
+                          style={styles.refinance}
                           source={require('../assets/Tick_mark.png')}
                           />
                         }
                         <View  style={{alignSelf: 'center',margin:5}}>
-                          <Text style={{fontSize:15,textAlign:"center"}}>{this.state.ques1_text2.Text}</Text>
+                            <Text style={{fontSize:15,textAlign:"center"}}>{this.state.ques1_text2.Text}</Text>
                         </View>
                       </View>
                       <View style={{alignItems: 'flex-end',position:"absolute",right:0}}>
@@ -1231,14 +1265,14 @@ export default class Afford extends React.Component {
                             onPress={this.handleChangePurchase.bind(this)}
                             >
                             <Image
-                              style={{ width: 130, height: 130 }}
+                              style={styles.refinance}
                               source={require('../assets/purchase_final.png')}
                             />
                           </TouchableOpacity>
                         }
                         {( this.state.showimage2==true )&&
                           <Image
-                          style={{ width: 130, height: 130 }}
+                          style={styles.refinance}
                           source={require('../assets/Tick_mark.png')}
                           />
                         }
@@ -1334,7 +1368,7 @@ export default class Afford extends React.Component {
                           <Text style={{fontSize:15,textAlign:"center"}}>{this.state.ques2_text3.Text}</Text>
                         </View>
                       </View>
-                      <View style={{alignItems: 'flex-end',marginLeft:50}}>
+                      <View style={styles.singlefinalImage2}>
                         {this.state.showimage6 == false &&
                           <TouchableOpacity 
                             onPress={this.handleChangeTownHouse.bind(this)}
@@ -1631,7 +1665,7 @@ export default class Afford extends React.Component {
                   <View style={{ alignSelf:"center",width:300}}>
                     <Dropdown inputContainerStyle={{borderBottomColor:"white"}}
                               baseColor={"black"}
-                              containerStyle={{height:60,borderColor:"black",borderWidth:1,borderRadius:10,paddingLeft:15,paddingRight:15,justifyContent:"center"}}
+                              containerStyle={styles.dropdown2}
                               label={!this.state.loan_type?'Select':''}
                               data={loan_type_data}
                               onChangeText={this.handleChangeLoanType.bind(this)}
@@ -1698,7 +1732,7 @@ export default class Afford extends React.Component {
                     <View style={{ alignSelf:"center",width:300}}>
                       <Dropdown inputContainerStyle={{borderBottomColor:"white"}}
                                 baseColor={"black"}
-                                containerStyle={{height:60,borderColor:"black",borderWidth:1,borderRadius:5,paddingLeft:15,paddingRight:15,justifyContent:"center"}}
+                                containerStyle={styles.dropdown2}
                                 label={!this.state.mortage_late?'Select':''}
                                 data={mortage_late_data}
                                 onChangeText={this.handleChangeMortageLates.bind(this)}
@@ -1771,7 +1805,7 @@ export default class Afford extends React.Component {
                           autoFocus = {true}
                           returnKeyType = {"next"}
                           onSubmitEditing={(event) => { 
-                             this.refs.currentCity.focus(); 
+                             this.refs.currentZip.focus(); 
                           }}
                           underlineColorAndroid='transparent' style={styles.password}
                           onChangeText={this.Address.bind(this) }
@@ -1779,33 +1813,41 @@ export default class Afford extends React.Component {
                     </TextInput>
                     {!this.state.address? 
                       <View  style={{width:250,alignSelf:"center"}}>
-                        <Text style={{color:"red"}}>
+                        <Text style={{color:"red",height:20,fontSize:10}}>
                           {this.state.errorvalue8}
                         </Text>
                       </View> :
                       <Text></Text>
                     }
-                    <TextInput style={{marginTop:10}} placeholder={this.state.ques13_text2.Text} placeholderTextColor={'black'} 
+                    <TextInput  placeholder={this.state.ques13_text4.Text}
+                      keyboardType="numeric" 
+                      placeholderTextColor={'black'}
+                      ref='currentZip'
+                      returnKeyType = {"next"}
+                      
+                      maxLength={5} 
                       underlineColorAndroid='transparent' style={styles.password}
-                      onChangeText={this.City.bind(this) }
-                      ref='currentCity'
-                      autoCapitalize='none'
-                      value={this.state.city}>
-                    </TextInput>
-                    {(!this.state.city || this.state.validcity==false)? 
+                      onChangeText={this.Zip.bind(this) } value={this.state.zip} 
+                      // onSubmitEditing={(event) => { 
+                      //      this.checkZip(this.state.zip)   
+                      // }}
+                      >
+
+                    </TextInput>   
+                    {(!this.state.zip || (this.state.zip<5)==false)? 
                       <View  style={{width:250,alignSelf:"center"}}>
-                        <Text style={{color:"red"}}>
-                          {this.state.cityerrorvalue}
+                        <Text style={{color:"red",height:20,fontSize:10}}>
+                          {this.state.errorvalue9}
                         </Text>
                       </View> :
                       <Text></Text>
                     }
-                    <View style={{ alignSelf:"center",width:250,marginTop:10}}>
+                    <View style={{ alignSelf:"center",width:250,marginTop:0}}>
                       <Dropdown inputContainerStyle={{borderBottomColor:"white"}}
-                                fontSize={18}
+                                fontSize={12}
                                 baseColor={"black"}
                                 
-                                containerStyle={{height:60,borderColor:"black",borderWidth:1,borderRadius:5,paddingLeft:10,paddingRight:10,justifyContent:"center"}}
+                                containerStyle={styles.dropdown}
                                 label={!this.state.property?this.state.ques13_text3.Text:''}
                                 data={property_data}
                                 onChangeText={this.Property.bind(this)}
@@ -1818,23 +1860,22 @@ export default class Afford extends React.Component {
                     </View>
                     {!this.state.property? 
                       <View  style={{width:250,alignSelf:"center"}}>
-                        <Text style={{color:"red"}}>
+                        <Text style={{color:"red",height:20,fontSize:10}}>
                           {this.state.stateerrorvalue8}
                         </Text>
                       </View> :
                       <Text></Text>
                     }     
-                    <TextInput  placeholder={this.state.ques13_text4.Text}
-                      keyboardType="numeric" 
-                      placeholderTextColor={'black'}
-                      maxLength={5} 
+                    <TextInput style={{marginTop:10}} placeholder={this.state.ques13_text2.Text} placeholderTextColor={'black'} 
                       underlineColorAndroid='transparent' style={styles.password}
-                      onChangeText={this.Zip.bind(this) } value={this.state.zip} >
-                    </TextInput>   
-                    {(!this.state.zip || (this.state.zip<5)==false)? 
+                      onChangeText={this.City.bind(this) }
+                      autoCapitalize='none'
+                      value={this.state.city}>
+                    </TextInput>
+                    {(!this.state.city || this.state.validcity==false)? 
                       <View  style={{width:250,alignSelf:"center"}}>
-                        <Text style={{color:"red"}}>
-                          {this.state.errorvalue9}
+                        <Text style={{color:"red",height:20,fontSize:10}}>
+                          {this.state.cityerrorvalue}
                         </Text>
                       </View> :
                       <Text></Text>
@@ -1864,7 +1905,7 @@ export default class Afford extends React.Component {
                     </TextInput>
                     {(!this.state.fname || this.state.validfname==false)? 
                       <View  style={{width:250,alignSelf:"center"}}>
-                        <Text style={{color:"red"}}>
+                        <Text style={{color:"red",height:20,fontSize:10}}>
                           {this.state.errorvalue10}
                         </Text>
                       </View> :
@@ -1882,7 +1923,7 @@ export default class Afford extends React.Component {
                     </TextInput>
                     {(!this.state.lname || this.state.validlname==false)? 
                       <View  style={{width:250,alignSelf:"center"}}>
-                        <Text style={{color:"red"}}>
+                        <Text style={{color:"red",height:20,fontSize:10}}>
                           {this.state.errorvalue11}
                         </Text>
                       </View> :
@@ -1899,7 +1940,7 @@ export default class Afford extends React.Component {
                       value={this.state.email}>
                     </TextInput>
                     <View  style={{width:250,alignSelf:"center"}}>
-                        <Text style={{color:"red"}}>
+                        <Text style={{color:"red",height:20,fontSize:10}}>
                           {this.state.errorvalue21}
                         </Text>
                       </View>
@@ -1921,7 +1962,7 @@ export default class Afford extends React.Component {
                     </TextInput> 
                     {!this.state.phone? 
                       <View style={{width:250,alignSelf:"center"}}>
-                        <Text style={{color:"red"}}>
+                        <Text style={{color:"red",height:20,fontSize:10}}>
                           {this.state.errorvalue13}
                         </Text>
                       </View> :

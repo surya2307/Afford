@@ -6,7 +6,7 @@ module.exports = StyleSheet.create({
   headerstyles:{
     backgroundColor:"white",
     marginTop:Platform.OS === 'ios' ? 20 : 0,
-    height:70,
+    height:deviceHeight<=550?50:70,
     elevation: 2,
     marginBottom: 3,
     
@@ -14,6 +14,15 @@ module.exports = StyleSheet.create({
   imageStyle:{
     height:deviceHeight<=650?70 : 130,
     width:deviceHeight<=650?70 : 130
+  },
+  refinance:{
+    height:deviceHeight<=550?70 : 130,
+    width:deviceHeight<=550?80 : 130
+  },
+  viewrifan:{
+  flexDirection:"row",
+  width:deviceHeight<=550?250:300,
+  alignSelf:"center"
   },
   // mycont:{
   //   width:"100%",
@@ -72,23 +81,53 @@ module.exports = StyleSheet.create({
   },
   password: {
     width:250,
-    height:30,
+    height:deviceHeight<=650?40:60,
     backgroundColor:'white',
     borderWidth: 1,
-    fontSize:16,
+    fontSize:deviceHeight<=650?10:16,
     paddingLeft:10,
     marginTop:10,
     position:'relative',
     borderRadius:5,
     alignSelf:"center",
   },
+  dropdown:{
+    height:deviceHeight<=650?40:60,
+    borderColor:"black",
+    borderWidth:1,
+    borderRadius:5,
+    paddingLeft:10,
+    paddingRight:10,
+    justifyContent:"center",
+    marginTop:10,
+    paddingBottom:10
+  },
+  fontsizedropdown:{
+    fontSize:deviceHeight<=650?12:18
+  },
+  dropdown2:{
+    height:deviceHeight<650?40:60,
+  borderColor:"black",
+  borderWidth:1,
+  borderRadius:10,
+  paddingLeft:15,
+  paddingRight:15,
+  justifyContent:"center",
+  paddingBottom:10,
+  // alignSelf:"center"
+  },
   ViewPropertytype:{
     justifyContent: "center",
     padding:deviceHeight<=650?0:"5%"
   },
   singlefinalImage:{ 
-    width: deviceHeight<=650?120:110,
-    height: deviceHeight<=650?90:110
+    width: deviceHeight<=650?(deviceHeight<=550)?100:120:110,
+    height: deviceHeight<=650?(deviceHeight<=550)?80:90:110
+  },
+  singlefinalImage2:{ 
+    alignItems: 'flex-end',
+    marginLeft:50,
+    left: deviceHeight<=550?45:0,
   },
   tickmark: { 
     width: deviceHeight<=650?100:110,
@@ -101,13 +140,13 @@ module.exports = StyleSheet.create({
       marginTop:deviceHeight<=650?10:20
    },
    page2style3:{ 
-    width: deviceHeight<=650?120:130,
-    height: deviceHeight<=650?95:110
+    width: deviceHeight<=650?(deviceHeight<=550)?100:120:130,
+    height: deviceHeight<=650?(deviceHeight<=550)?85:95:110
   },
   multifinalImage:{ 
-    width: deviceHeight<=650?120:110,
+    width: deviceHeight<=650?(deviceHeight<=550)?100:120:110,
     
-    height: deviceHeight<=650?90:110,
+    height: deviceHeight<=650?(deviceHeight<=550)?80:90:110,
     
   },
   credit:{ 
