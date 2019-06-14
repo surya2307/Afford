@@ -20,9 +20,9 @@ import axios from 'axios';
 import styles from '../css/afford';
 import { Dimensions, StatusBar, Platform } from 'react-native';
 
-var height = Platform.OS === 'android' ? Dimensions.get('screen').height - StatusBar.currentHeight : Dimensions.get('window').height;
+var deviceHeight = Platform.OS === 'android' ? Dimensions.get('screen').height - StatusBar.currentHeight : Dimensions.get('window').height;
 var width = Platform.OS === 'android' ? Dimensions.get('screen').width : Dimensions.get('window').width;
-console.log(height);
+console.log(deviceHeight);
 console.log(width);
 export default class Afford extends React.Component {
   static navigationOptions = {
@@ -555,6 +555,22 @@ export default class Afford extends React.Component {
     })
   }
   Email(text){
+    if(!text.includes("@") || !text.includes(".")){
+      this.setState({
+        errorvalue21:"Enter valid Email.",
+         
+        //index:0,
+        //enable_back:false
+      })
+    }
+    else{
+      this.setState({
+        errorvalue21:"",
+         
+        //index:0,
+        //enable_back:false
+      })
+    }
     this.setState({
       email:text,
       email_data:text.toString()
@@ -1844,7 +1860,8 @@ export default class Afford extends React.Component {
                     }
                     <View style={{ alignSelf:"center",width:250,marginTop:0}}>
                       <Dropdown inputContainerStyle={{borderBottomColor:"white"}}
-                                fontSize={12}
+                                
+                                fontSize={deviceHeight<650?12:18}
                                 baseColor={"black"}
                                 
                                 containerStyle={styles.dropdown}

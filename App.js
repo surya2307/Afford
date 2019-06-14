@@ -206,6 +206,7 @@ async componentWillMount() {
      // console.log('onNotification:');
       // this.showAlert(title, body);
       // alert('message');
+      notification.setSound("default");
 
       const localNotification = new firebase.notifications.Notification({
         sound: 'default',
