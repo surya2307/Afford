@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Alert, async, AppState, Image} from 'react-native';
+import { Platform, StyleSheet, Text, View, Alert, async, AppState, Image, BackHandler} from 'react-native';
 import firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
 import NetInfo from "@react-native-community/netinfo";
@@ -56,7 +56,7 @@ export default class App extends Component {
 async componentWillMount() {
   // Preload data from an external API
   // Preload data using AsyncStorage
-
+  BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
   await this.CheckConnectivity();
 }
   CheckConnectivity = () => {
@@ -153,12 +153,28 @@ async componentWillMount() {
   }
 
   componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
     this.notificationListener;
     this.notificationOpenedListener;
     this.notificationDisplayedListener();
     // AppState.removeEventListener('change', this._handleAppStateChange);
   }
-
+   onBackPress = () => {
+ 
+    //Code to display alert message when use click on android device back button.
+    Alert.alert(
+      ' Exit From App ',
+      ' Do you want to exit From App ?',
+      [
+        { text: 'Yes', onPress: () => BackHandler.exitApp() },
+        { text: 'No', onPress: () => console.log('NO Pressed') }
+      ],
+      { cancelable: false },
+    );
+ 
+    // Return true to enable back button over ride.
+    return true;
+  }
   // _handleAppStateChange = (nextAppState) => {
   //   if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
   //     console.log('App has come to the foreground!')

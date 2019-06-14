@@ -170,6 +170,22 @@ module.exports = StyleSheet.create({
     width:deviceHeight<=650?260:280,
     alignSelf:"center"
     },
-   buttoncss:{flexDirection:"row",width:"100%",justifyContent:"center",marginTop:deviceHeight<=650?"5%":"10%", height: 60 }
+    heading1:{ 
+      height: deviceHeight<=550?60:90,
+    //  backgroundColor: '',
+     justifyContent: "center"
+     },
+     headingFont:{
+       fontSize:deviceHeight<=550?15:20,
+     fontWeight:"bold",
+     textAlign:"center"
+     },
+   buttoncss:{
+     flexDirection:"row",
+     width:"100%",
+     justifyContent:"center",
+     marginTop:deviceHeight<=650?"5%":"10%",
+      height: 60
+       }
 });
       

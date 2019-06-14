@@ -103,7 +103,7 @@ export default class Afford extends React.Component {
       validcity:false,
       validfname:false,
       validlname:false,
-      validZipCode:false,
+      validZipCode:true, //! valid zipcode is not functioning as of now, need to implement the checkzip function with client api and then get back to this
       //errormessages
 
       //error message for question 1
@@ -490,7 +490,7 @@ export default class Afford extends React.Component {
           len=5;
       }
       if(len==5){
-        this.checkZip(text)   
+        // this.checkZip(text)   
         this.setState({
           zip:text,
           zip_data:text.toString(),
@@ -504,7 +504,7 @@ export default class Afford extends React.Component {
          })
       }  
   }
- checkZip=async (zip) => {
+ checkZip=async (zip) => { // * key has to be updated with client's key
     let fetchedData=0;
     let checkResponse=0;
     await fetch(`https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:${zip}&key=AIzaSyC-jI6r-CfVn9xwu1YTyqhRDVp9B7RtAMw`)
@@ -523,7 +523,7 @@ export default class Afford extends React.Component {
         checkResponse=undefined;
        });
       if(checkResponse==undefined){
-      console.log("ok i am being observed");
+      console.log("ok i am being spooked by the FBI");
       this.setState({validZipCode:false,errorvalue9:"Invalid ZipCode"})
       console.log(this.state.validZipCode);
       } 
@@ -744,15 +744,15 @@ export default class Afford extends React.Component {
           //index:0,
           //enable_back:false
         })
-      }
-      if(this.state.index==12 && ((this.state.zip).toString().length)<5 && this.state.validZipCode==false){
+      }//&& this.state.validZipCode==false
+      if(this.state.index==12 && ((this.state.zip).toString().length)<5 ){
         this.setState({
           errorvalue9:"Enter Valid Zip Code",
           //index:0,
           //enable_back:false
         })
-      }
-      if(this.state.index==12 && (this.state.address && this.state.validZipCode && this.state.zip && this.state.validcity && ((this.state.zip.toString().length)<5)==false)){
+      }// && this.state.validZipCode 
+      if(this.state.index==12 && (this.state.address && this.state.zip && this.state.validcity && ((this.state.zip.toString().length)<5)==false)){
         this.setState({
           errorvalue8:"",
           cityerrorvalue:"",
@@ -1788,9 +1788,9 @@ export default class Afford extends React.Component {
               }
               {this.state.index===12 &&
                 <View>
-                  <View style={{ height: 90, backgroundColor: '',justifyContent: "center"}}>
+                  <View style={styles.heading1}>
                     <View style={{alignContent: 'center',padding:5}}>
-                      <Text style={{fontSize:20,fontWeight:"bold",textAlign:"center"}} >
+                      <Text style={styles.headingFont} >
                       {this.state.ques13_ques}
                       </Text>
                     </View>
@@ -1885,9 +1885,9 @@ export default class Afford extends React.Component {
               }
               {this.state.index===13 &&
                 <View>
-                  <View style={{ height: 90, backgroundColor: '',justifyContent: "center"}}>
+                  <View style={styles.heading1}>
                     <View style={{alignContent: 'center',padding:5}}>
-                      <Text style={{fontSize:20,fontWeight:"bold",textAlign:"center"}} >
+                      <Text style={styles.headingFont} >
                        {this.state.ques14_ques}
                       </Text>
                     </View>
@@ -2032,12 +2032,12 @@ export default class Afford extends React.Component {
           {this.state.mainModal == true &&
             <Modal isVisible={this.state.mainModal}>
               <View style={{ flex: 1,backgroundColor:"#ced7e5" ,width:"100%" }}>
-                <View style={{alignSelf:"center",marginTop:50}}>
+                <View style={{alignSelf:"center",}}>
                   <Image
                     source={require('../assets/main.png')}
                   />
                 </View>
-                <View style={{marginTop:50}}>
+                <View style={{}}>
                   <Text style={{fontSize:15,textAlign:"center",margin:10}} >
                     *For a Free quote. affordability.io is not associated with the government, and our service is not approved by the government or your lender; and even if you accept this offer and use our services, your lender may not agree to change your loan.    
                   </Text>
