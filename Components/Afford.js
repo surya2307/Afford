@@ -1,8 +1,7 @@
-<script src="http://192.168.56.1:8097"></script>
 import React from 'react';
-import {  View, Image,TextInput,TouchableOpacity,Alert} from 'react-native';
+import {  View, Image,TextInput,TouchableOpacity,Alert, Animated} from 'react-native';
 import Display from 'react-native-display';
-
+import MarkSlider from 'react-native-mark-slider';
 import {
   Button,
   Text,
@@ -19,6 +18,7 @@ import Slider from 'react-native-slider';
 import axios from 'axios';
 import styles from '../css/afford';
 import { Dimensions, StatusBar, Platform } from 'react-native';
+import CDD from './CustomDropdown';
 
 var deviceHeight = Platform.OS === 'android' ? Dimensions.get('screen').height - StatusBar.currentHeight : Dimensions.get('window').height;
 var width = Platform.OS === 'android' ? Dimensions.get('screen').width : Dimensions.get('window').width;
@@ -162,9 +162,13 @@ export default class Afford extends React.Component {
       index: 0,
       privacy_enable:false,
       value: 75000,
+      value2: 75000,
       mortage_value:50000,
+      mortage_value2:50000,
       current_interest_value: 75.50,
+      current_interest_value2: 75.50,
       down_payment_value:15.00,
+      down_payment_value2:15.00,
       mainModal:false,
       isReady: false,
       loan_type:'',
@@ -372,6 +376,7 @@ export default class Afford extends React.Component {
         "emailId": this.state.email_data,
         "phoneNumber":this.state.phoneNumber_data
       }
+      console.log(data);
       const self = this;
       const config = {
         url : 'http://69.55.49.121:3001/v1/userTemplates/register',
@@ -384,6 +389,7 @@ export default class Afford extends React.Component {
       axios(config).then((response)=>{
         //this.props.navigation.navigate("Submit" )
         Alert.alert('Successfully Submitted.');
+        console.log(response);  
         this.setState({ 
           index: 0,
           enable_back: false,
@@ -787,6 +793,7 @@ export default class Afford extends React.Component {
     }
   }
   handleChangeRefinance(){
+    console.log(this.state.showimage1,this.state.showimage2);
     this.setState({
       showimage1:true,
       showimage2:false,
@@ -809,6 +816,7 @@ export default class Afford extends React.Component {
     }
   }
   handleChangePurchase(){
+    console.log(this.state.showimage1,this.state.showimage2);
     this.setState({
       showimage2:true,
       showimage1:false,
@@ -1087,7 +1095,58 @@ export default class Afford extends React.Component {
   }
    
   render() {
-    
+    const marks = [
+      { name: '0', value: 0 },
+      // { name: '250K', value: 250000 },
+      { name: '500K', value: 500000},
+      // { name: '750K', value: 750000 },
+      { name: '1M', value: 1000000 },
+      // { name: '1.25M', value: 1250000 },
+      { name: '1.5M', value: 1500000 },
+      // { name: '1.75M', value: 1750000 },
+      { name: '2M', value: 2000000 },
+      
+      
+    ];
+    const marks2 = [
+      { name: '0', value: 0 },
+      // { name: '250K', value: 250000 },
+      { name: '500K', value: 500000},
+      // { name: '750K', value: 750000 },
+      { name: '1M', value: 1000000 },
+      // { name: '1.25M', value: 1250000 },
+      { name: '1.5M', value: 1500000 },
+      // { name: '1.75M', value: 1750000 },
+      { name: '2M', value: 2000000 },
+      
+      
+    ];
+    const marks3 = [
+      { name: '0', value: 0 },
+      
+      { name: '25', value: 25},
+      
+      { name: '50', value: 50 },
+      
+      { name: '75', value:75 },
+      
+      { name: '100', value: 100 },
+      
+      
+    ];
+    const marks4 = [
+      { name: '0', value: 0 },
+      
+      { name: '25', value: 25},
+      
+      { name: '50', value: 50 },
+      
+      { name: '75', value:75 },
+      
+      { name: '100', value: 100 },
+      
+      
+    ];
 
      let loan_type_data=[ {
       value: "Fixed",
@@ -1095,20 +1154,8 @@ export default class Afford extends React.Component {
       value: 'Adjustable',
     }
     ];
-    let mortage_late_data=[ {
-      value: "I'm not behind",
-    }, {
-      value: 'One',
-    },{
-      value: "One or Two",
-    }, {
-      value: 'Two or More',
-    },
-    {
-      value: "Three or More",
-    }
-    ];
-    let property_data=[     {
+    let mortage_late_data=["I'm not behind", 'One', "One or Two", 'Two or More', "Three or More",];
+    let property_data2=[     {
       value: "Alabama",
     }, {
       value: 'Alaska',
@@ -1225,6 +1272,57 @@ export default class Afford extends React.Component {
       value: "Wyoming",
     }
     ];
+    let property_data=["Alabama",    
+       'Alaska',    
+       "Arizona",    
+      'Arkansas',    
+       "California",    
+       "Colorado",    
+      'Connecticut',   
+      "Delaware",    
+      'Florida',    
+      "Georgia",    
+       'Hawaii',     
+      "Idaho",    
+      "Illinois",    
+      'Indiana',    
+       "Iowa",    
+       'Kansas',    
+       "Kentucky",    
+       'Louisiana',    
+      "Maine",    
+       "Maryland",    
+      'Massachusetts',      
+      "Michigan",   
+      'Minnesota',    
+       "Mississippi",    
+       'Missouri',   
+      "Montana",
+      "Nebraska",    
+      'Nevada',    
+       "New Hampshire",    
+       'New Jersey',    
+      "New Mexico",    
+      'New York',    
+       "North Carolina",    
+       "North Dakota",    
+      'Ohio',   
+      "Oklahoma",    
+      'Oregon',    
+      "Pennsylvania",    
+       'Rhode Island',        
+      "South Carolina",    
+      "South Dakota",    
+      'Tennessee',   
+       "Texas",    
+      'Utah',   
+      "Vermont",
+     "Virginia",    
+      'Washington',    
+      "West Virginia",    
+      'Wisconsin',   
+       "Wyoming",    
+    ];
     // let arr1 = this.state.questions_list
     //console.log("opoppppp...:",this.state.questions_list.Text)
     if (this.state.isReady) {
@@ -1272,7 +1370,7 @@ export default class Afford extends React.Component {
                           />
                         }
                         <View  style={{alignSelf: 'center',margin:5}}>
-                            <Text style={{fontSize:15,textAlign:"center"}}>{this.state.ques1_text2.Text}</Text>
+                            <Text style={{fontSize:15,textAlign:"center"}}>{this.state.ques1_text1.Text}</Text>
                         </View>
                       </View>
                       <View style={{alignItems: 'flex-end',position:"absolute",right:0}}>
@@ -1293,7 +1391,7 @@ export default class Afford extends React.Component {
                           />
                         }
                         <View  style={{alignSelf: 'center',margin:5}}>
-                          <Text style={{fontSize:15,textAlign:"center"}}>{this.state.ques1_text1.Text}</Text>
+                          <Text style={{fontSize:15,textAlign:"center"}}>{this.state.ques1_text2.Text}</Text>
                         </View>
                       </View>
                     </View>
@@ -1537,19 +1635,21 @@ export default class Afford extends React.Component {
                   </View>
                   <View style={{ backgroundColor: '',justifyContent: "center",padding:"7%"}}>
                     <View>
-                      <Slider
-                        trackStyle={{height:20}}
-                        thumbStyle={{width:30,height:30}}
+                      <MarkSlider
+                        value={this.state.value}
+                        thumbTintColor="green"
+                        step={2500}
+                        max={2000000}
+                        marks={marks}
+                        // style={{transform: [ { scaleY: 3.0 }],borderRadius:40}}
+                        onChange={value =>this.setState({ value2:value })}
+                        onSlidingComplete={this.change.bind(this)}
                         minimumTrackTintColor="blue"
                         maximumTrackTintColor="green"
-                        step={25000}
-                        maximumValue={2000000}
-                        onValueChange={this.change.bind(this)}
-                        value={this.state.value}
-                      />
+                    />
                     </View>
                     <View style={{margin:"8%"}}>
-                      <Text style={{fontSize:20,textAlign:"center"}}>{"$"+this.state.value}</Text>
+                      <Text style={{fontSize:20,textAlign:"center"}}>{"$"+this.state.value2}</Text>
                     </View>
                   </View>
                 </View>
@@ -1565,19 +1665,22 @@ export default class Afford extends React.Component {
                   </View>
                   <View style={{ backgroundColor: '',justifyContent: "center",padding:"7%"}}>
                     <View>
-                      <Slider
-                        trackStyle={{height:20}}
-                        thumbStyle={{width:30,height:30}}
+                      <MarkSlider
+                        value={this.state.mortage_value}
+                        thumbTintColor="green"
+                        step={2500}
+                        max={2000000}
+                        marks={marks2}
+                        // onChange={value =>this.setState({ value1:value })}
+                        onChange={value =>this.setState({ mortage_value2:value })}
+                        onSlidingComplete={this.Mortage.bind(this)}
+                        // onValueChange=
                         minimumTrackTintColor="blue"
                         maximumTrackTintColor="green"
-                        step={25000}
-                        maximumValue={2000000}
-                        onValueChange={this.Mortage.bind(this)}
-                        value={this.state.mortage_value}
-                      />
+                    />
                     </View>
                     <View style={{margin:"8%"}}>
-                      <Text style={{fontSize:20,textAlign:"center"}}>{"$"+this.state.mortage_value}</Text>
+                      <Text style={{fontSize:20,textAlign:"center"}}>{"$"+this.state.mortage_value2}</Text>
                     </View>
                   </View>
                 </View>
@@ -1593,19 +1696,22 @@ export default class Afford extends React.Component {
                   </View>
                   <View style={{ backgroundColor: '',justifyContent: "center",padding:"7%"}}>
                     <View>
-                      <Slider
-                        trackStyle={{height:20}}
-                        thumbStyle={{width:30,height:30}}
+                      <MarkSlider
+                        value={this.state.current_interest_value}
+                        thumbTintColor="green"
+                        step={0.50}
+                        max={100}
+                        marks={marks3}
+                        // onChange={value =>this.setState({ value1:value })}
+                        onChange={value =>this.setState({ current_interest_value2:value })}
+                        onSlidingComplete={this.CurrentInterest.bind(this)}
+                        // onValueChange=
                         minimumTrackTintColor="blue"
                         maximumTrackTintColor="green"
-                        step={0.50}
-                        maximumValue={100}
-                        onValueChange={this.CurrentInterest.bind(this)}
-                        value={this.state.current_interest_value}
-                      />
+                    />
                     </View>
                     <View style={{margin:"8%"}}>
-                      <Text style={{fontSize:20,textAlign:"center"}}>{this.state.current_interest_value +"%"}</Text>
+                      <Text style={{fontSize:20,textAlign:"center"}}>{this.state.current_interest_value2 +"%"}</Text>
                     </View>
                   </View>
                 </View>
@@ -1621,19 +1727,22 @@ export default class Afford extends React.Component {
                   </View>
                   <View style={{ backgroundColor: '',justifyContent: "center",padding:"7%"}}>
                     <View>
-                      <Slider
-                        trackStyle={{height:20}}
-                        thumbStyle={{width:30,height:30}}
+                      <MarkSlider
+                        value={this.state.down_payment_value}
+                        thumbTintColor="green"
+                        step={1}
+                        max={100}
+                        marks={marks4}
+                        // onChange={value =>this.setState({ value1:value })}
+                        onChange={value =>this.setState({ down_payment_value2:value })}
+                        onSlidingComplete={this.DownPayment.bind(this)}
+                        // onValueChange=
                         minimumTrackTintColor="blue"
                         maximumTrackTintColor="green"
-                        step={1.00}
-                        maximumValue={100}
-                        onValueChange={this.DownPayment.bind(this)}
-                        value={this.state.down_payment_value}
-                      />
+                    />
                     </View>
                     <View style={{margin:"8%"}}>
-                      <Text style={{fontSize:20,textAlign:"center"}}>{this.state.down_payment_value+"%"}</Text>
+                      <Text style={{fontSize:20,textAlign:"center"}}>{this.state.down_payment_value2+"%"}</Text>
                     </View>
                   </View>
                 </View>
@@ -1679,7 +1788,7 @@ export default class Afford extends React.Component {
                     </View>
                   </View>
                   <View style={{ alignSelf:"center",width:300}}>
-                    <Dropdown inputContainerStyle={{borderBottomColor:"white"}}
+                    {/*<Dropdown inputContainerStyle={{borderBottomColor:"white"}}
                               baseColor={"black"}
                               containerStyle={styles.dropdown2}
                               label={!this.state.loan_type?'Select':''}
@@ -1691,8 +1800,32 @@ export default class Afford extends React.Component {
                               selectedItemColor={"black"}
                               dropdownPosition={1}
                               // overlayStyle={{opacity:0.5}}
+
+
+                              handleChangeLoanType(value){
+                                  this.setState({
+                                    loan_type:value,
+                                    index:9,
+                                    desireLoanType_data:value.toString()
+                                  })
+                                }
                               
-                    />
+                    />*/}
+                    <CDD  
+                          onChangeText={(value) => {this.setState({
+                                    loan_type:value,
+                                    index:9,
+                                    desireLoanType_data:value.toString()
+                                 
+                                  }
+                                  )}
+                          }
+                          value={this.state.loan_type==""?"click me":this.state.loan_type}
+                          array={["Fixed","Adjustable"]}
+                          height={90} 
+                          rgba={[255,245,235,1]}
+                          scrollviewstyle={{width:250, backgroundColor:'#fff5eb'}}
+                     />
                   </View>         
                   {!this.state.loan_type ? 
                     <View  style={{alignSelf:"center"}}>
@@ -1746,7 +1879,7 @@ export default class Afford extends React.Component {
                   </View>
                   <View style={{padding:20}}>
                     <View style={{ alignSelf:"center",width:300}}>
-                      <Dropdown inputContainerStyle={{borderBottomColor:"white"}}
+                      {/*<Dropdown inputContainerStyle={{borderBottomColor:"white"}}
                                 baseColor={"black"}
                                 containerStyle={styles.dropdown2}
                                 label={!this.state.mortage_late?'Select':''}
@@ -1758,7 +1891,21 @@ export default class Afford extends React.Component {
                                 itemCount={6}
                                 pickerStyle={{backgroundColor: 'rgba(255, 245, 235, 1)'}}
                                 dropdownPosition={1}
-                      />
+                      />*/}
+                      <CDD  
+                          onChangeText={(value) => {this.setState({
+                                          mortage_late:value,
+                                          mortageRates_data:value.toString(),
+                                          index:11
+                                        })
+                                  }
+                          }
+                          value={this.state.mortage_late==""?"click me":this.state.mortage_late}
+                          array={mortage_late_data}
+                          height={190} 
+                          rgba={[255,245,235,1]}
+                          scrollviewstyle={{width:250, backgroundColor:'#fff5eb'}}
+                     />
                     </View>         
                   </View>
                   {!this.state.mortage_late ? 
@@ -1866,7 +2013,7 @@ export default class Afford extends React.Component {
                                 
                                 containerStyle={styles.dropdown}
                                 label={!this.state.property?this.state.ques13_text3.Text:''}
-                                data={property_data}
+                                data={property_data2}//property_data
                                 onChangeText={this.Property.bind(this)}
                                 value={this.state.property}
                                 itemColor={"blue"}
@@ -1874,6 +2021,18 @@ export default class Afford extends React.Component {
                                 selectedItemColor={"black"}
                                 dropdownPosition={1}
                       />
+                       {/* <CDD  
+                          onChangeText={(value) => {this.setState({
+                                          property:value
+                                        })
+                                  }
+                          }
+                          value={this.state.property==""?"click me":this.state.property}
+                          array={property_data}
+                          height={250} 
+                          rgba={[255,245,235,1]}
+                          scrollviewstyle={{width:250, backgroundColor:'#fff5eb'}}
+                     />*/}
                     </View>
                     {!this.state.property? 
                       <View  style={{width:250,alignSelf:"center"}}>
