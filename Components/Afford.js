@@ -1820,7 +1820,7 @@ export default class Afford extends React.Component {
                                   }
                                   )}
                           }
-                          value={this.state.loan_type==""?"click me":this.state.loan_type}
+                          value={this.state.loan_type==""?"Select an option ":this.state.loan_type+"   "}
                           array={["Fixed","Adjustable"]}
                           height={90} 
                           rgba={[255,245,235,1]}
@@ -1877,7 +1877,7 @@ export default class Afford extends React.Component {
                       </Text>
                     </View>
                   </View>
-                  <View style={{padding:20}}>
+                  <View style={{padding:10}}>
                     <View style={{ alignSelf:"center",width:300}}>
                       {/*<Dropdown inputContainerStyle={{borderBottomColor:"white"}}
                                 baseColor={"black"}
@@ -1900,9 +1900,9 @@ export default class Afford extends React.Component {
                                         })
                                   }
                           }
-                          value={this.state.mortage_late==""?"click me":this.state.mortage_late}
+                          value={this.state.mortage_late==""?"Select an option":this.state.mortage_late+"   "}
                           array={mortage_late_data}
-                          height={190} 
+                          height={180} 
                           rgba={[255,245,235,1]}
                           scrollviewstyle={{width:250, backgroundColor:'#fff5eb'}}
                      />

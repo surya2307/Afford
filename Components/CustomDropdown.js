@@ -88,7 +88,7 @@ class CDD extends React.Component{
         
         </View>
         <TouchableOpacity style={{height:50,elevation: 2,width:250,justifyContent:'center',alignItems:'center', borderRadius: 4, borderWidth: 0.5}} onPress={this.clickedme}>
-        <Text>{this.props.value}</Text>
+        <Text style={{fontSize:17}}>{this.props.value}   &#10148;</Text>
         </TouchableOpacity>
         <View style={{height:this.props.height}}>
         {(this.state.display)?
