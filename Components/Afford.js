@@ -290,6 +290,7 @@ export default class Afford extends React.Component {
     });
   }
   SubmitButton(){
+    this.props.screenProps.CheckConnectivity();
     if(!this.state.email.includes("@") || !this.state.email.includes(".")){
       this.setState({
         errorvalue21:"Enter valid Email.",

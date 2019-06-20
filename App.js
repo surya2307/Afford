@@ -125,7 +125,12 @@ async componentWillMount() {
     console.log('HI');
     // this.postFcmToken();
     // AppState.addEventListener('change', this._handleAppStateChange);
-
+     this.onTokenRefreshListener = firebase.messaging().onTokenRefresh(fcmToken => {
+      // Process your token as required
+      
+      console.log("Updated Token=" + fcmToken);
+    });
+    
       
   }
   
@@ -153,6 +158,7 @@ async componentWillMount() {
   }
 
   componentWillUnmount() {
+     this.onTokenRefreshListener()
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
     this.notificationListener;
     this.notificationOpenedListener;
@@ -319,7 +325,7 @@ async componentWillMount() {
         ;
   }
     return (
-      <AppStackNavigator/>
+      <AppStackNavigator screenProps={{CheckConnectivity:this.CheckConnectivity}}/>
     );
   }
 }
