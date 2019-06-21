@@ -34,6 +34,22 @@ module.exports = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  container2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+    
+  },
+  container3: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10
+  },
   next_back_button_styles: {
     flexDirection: "row",
     //alignSelf: "center",

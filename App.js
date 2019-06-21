@@ -127,7 +127,8 @@ async componentWillMount() {
     // AppState.addEventListener('change', this._handleAppStateChange);
      this.onTokenRefreshListener = firebase.messaging().onTokenRefresh(fcmToken => {
       // Process your token as required
-      
+      this.setState({ fcmToken});
+      this.postFcmToken();
       console.log("Updated Token=" + fcmToken);
     });
     
@@ -222,6 +223,7 @@ async componentWillMount() {
         .setTitle(notification.title)
         // .setSubtitle(notification.subtitle)
         .setBody(notification.body)
+        .setSound('default')
         // .setData(notification.data)
         .android.setChannelId('fcm_default_channel') // e.g. the id you chose above
         .android.setSmallIcon('@drawable/ic_launcher') // create this icon in Android Studio

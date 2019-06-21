@@ -1,5 +1,5 @@
 import React from 'react';
-import {  View, Image,TextInput,TouchableOpacity,Alert, Animated} from 'react-native';
+import {  View, Image,TextInput,TouchableOpacity,Alert, Animated, ActivityIndicator} from 'react-native';
 import Display from 'react-native-display';
 import MarkSlider from 'react-native-mark-slider';
 import {
@@ -54,7 +54,7 @@ export default class Afford extends React.Component {
       ques3_text2:"",
       ques3_text3:"",
       ques3_text4:"",
-
+      isSubmitting:false,
       //question4
       ques4_ques:"",
       //question5
@@ -387,16 +387,19 @@ export default class Afford extends React.Component {
         method : 'post',
        
       };
+      this.setState({isReady:false,isSubmitting:true});
       axios(config).then((response)=>{
         //this.props.navigation.navigate("Submit" )
         Alert.alert('Successfully Submitted.');
         console.log(response);  
         this.setState({ 
+          isReady:true,
           index: 0,
           enable_back: false,
           enable_next: true,
           enable_submit:false,
           showimage1:false,
+          isSubmitting:false,
           showimage2:false,
           showimage3:false,
           showimage4:false,
@@ -2234,16 +2237,29 @@ export default class Afford extends React.Component {
         </Container>
       );
     }
-    
-      return <Header style={styles.headerstyles}>
-            <View style={{alignItems: 'center',flex: 1,justifyContent: 'center'}} >
-              <Image 
-                source={require('../assets/main.png')}
-              />
-            </View>
-          </Header>
-        ;
-  
+    else if(this.state.isSubmitting==false){
+      return (
+        <View 
+            style={styles.container2}
+            > 
+                <Image
+                style={{height:50,width:50}}
+                source={require('../ic_launcher.png')}
+                />
+        </View>
+        
+      );
+    }
+    else{
+      return (
+        <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+        <View>
+        <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+        <Text>Please Wait </Text>
+      </View>
+      );
+    }
   }
 }
 
