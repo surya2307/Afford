@@ -103,7 +103,7 @@ export default class Afford extends React.Component {
       validcity:false,
       validfname:false,
       validlname:false,
-      validZipCode:true, //! valid zipcode is not functioning as of now, need to implement the checkzip function with client api and then get back to this
+      validZipCode:false, //! valid zipcode is not functioning as of now, need to implement the checkzip function with client api and then get back to this
       //errormessages
 
       //error message for question 1
@@ -500,7 +500,7 @@ export default class Afford extends React.Component {
           len=5;
       }
       if(len==5){
-        // this.checkZip(text)   
+        this.checkZip(text)   
         this.setState({
           zip:text,
           zip_data:text.toString(),
@@ -510,7 +510,8 @@ export default class Afford extends React.Component {
       else{
         this.setState({
           zip:text,
-          zip_data:text.toString()
+          zip_data:text.toString(),
+          errorvalue9:"Invalid! a zipcode must be 5 characters long"
          })
       }  
   }
@@ -538,7 +539,7 @@ export default class Afford extends React.Component {
       console.log(this.state.validZipCode);
       } 
       else{
-        this.setState({errorvalue9:"",city:fetchedData[1]["long_name"],property:fetchedData[fetchedData.length-2]["long_name"],validZipCode:true})
+        this.setState({errorvalue9:"",property:fetchedData[fetchedData.length-2]["long_name"],validZipCode:true})
         console.log("city",this.state.city,
         "state",this.state.property);
       }
@@ -770,15 +771,15 @@ export default class Afford extends React.Component {
           //index:0,
           //enable_back:false
         })
-      }//&& this.state.validZipCode==false
-      if(this.state.index==12 && ((this.state.zip).toString().length)<5 ){
+      }//
+      if(this.state.index==12 && this.state.validZipCode==false && ((this.state.zip).toString().length)<5 ){
         this.setState({
           errorvalue9:"Enter Valid Zip Code",
           //index:0,
           //enable_back:false
         })
-      }// && this.state.validZipCode 
-      if(this.state.index==12 && (this.state.address && this.state.zip && this.state.validcity && ((this.state.zip.toString().length)<5)==false)){
+      }//
+      if(this.state.index==12 && this.state.validZipCode  && (this.state.address && this.state.zip && this.state.validcity && ((this.state.zip.toString().length)<5)==false)){
         this.setState({
           errorvalue8:"",
           cityerrorvalue:"",
@@ -1997,9 +1998,9 @@ export default class Afford extends React.Component {
                       maxLength={5} 
                       underlineColorAndroid='transparent' style={styles.password}
                       onChangeText={this.Zip.bind(this) } value={this.state.zip} 
-                      // onSubmitEditing={(event) => { 
-                      //      this.checkZip(this.state.zip)   
-                      // }}
+                      onSubmitEditing={(event) => { 
+                           this.checkZip(this.state.zip)   
+                      }}
                       >
 
                     </TextInput>   
