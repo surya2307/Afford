@@ -1824,6 +1824,7 @@ export default class Afford extends React.Component {
                                   }
                                   )}
                           }
+                          fontSize={15}
                           value={this.state.loan_type==""?"Select an option ":this.state.loan_type+"   "}
                           array={["Fixed","Adjustable"]}
                           height={90} 
@@ -1906,7 +1907,8 @@ export default class Afford extends React.Component {
                           }
                           value={this.state.mortage_late==""?"Select an option":this.state.mortage_late+"   "}
                           array={mortage_late_data}
-                          height={180} 
+                          fontSize={15}
+                          height={150} 
                           rgba={[255,245,235,1]}
                           scrollviewstyle={{width:250, backgroundColor:'#fff5eb'}}
                      />

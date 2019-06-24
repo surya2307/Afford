@@ -143,7 +143,7 @@ module.exports = StyleSheet.create({
   singlefinalImage2:{ 
     alignItems: 'flex-end',
     marginLeft:50,
-    left: deviceHeight<=550?45:0,
+    left: deviceHeight<=550?20:0,
   },
   tickmark: { 
     width: deviceHeight<=650?100:110,
