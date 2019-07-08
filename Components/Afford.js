@@ -37,7 +37,12 @@ export default class Afford extends React.Component {
       //quesetions being fetched from server
       //ques label is for questions
       //text label is for options for that question
-
+      yes1:"#ECE9E9",
+      yes2:"#ECE9E9",
+      yes3:"#ECE9E9",
+      no1:"#ECE9E9",
+      no2:"#ECE9E9",
+      no3:"#ECE9E9",
       //question1
       ques1_ques:"",
       ques1_text1:"",
@@ -181,7 +186,7 @@ export default class Afford extends React.Component {
       lname:"",
       phone:"",
       email:"",
-     
+      submitting:false,
       showimage1:false,
       showimage2:false,
       showimage3:false,
@@ -387,10 +392,14 @@ export default class Afford extends React.Component {
         method : 'post',
        
       };
-      this.setState({isReady:false,isSubmitting:true});
+      this.setState({isReady:false,submitting:true,isSubmitting:true});
+  
+        
+        setTimeout(() => {
+          
+
       axios(config).then((response)=>{
         //this.props.navigation.navigate("Submit" )
-        Alert.alert('Successfully Submitted.');
         console.log(response);  
         this.setState({ 
           isReady:true,
@@ -425,6 +434,12 @@ export default class Afford extends React.Component {
           // mainModal:false,
           // isReady: false,
           address:'',
+          yes1:"green",
+          yes2:"green",
+          yes3:"green",
+          no1:"red",
+          no2:"red",
+          no3:"red",
           city:'',
           zip:'',
           property:'',
@@ -432,6 +447,7 @@ export default class Afford extends React.Component {
           lname:"",
           phone:"",
           email:"",
+          submitting:false,
           errorvalue:"",
           errorvalue1:"",
           errorvalue2:"",
@@ -457,6 +473,7 @@ export default class Afford extends React.Component {
       }).catch((error) => {
          console.log(error.message);
       })
+        }, 8000);
       
     }
   }
@@ -500,12 +517,21 @@ export default class Afford extends React.Component {
           len=5;
       }
       if(len==5){
-        this.checkZip(text)   
+        this.checkZip(text)
+        if(this.state.validZipCode){ 
         this.setState({
           zip:text,
           zip_data:text.toString(),
           errorvalue9:""
          })
+       }
+       else{
+         this.setState({
+          zip:text,
+          zip_data:text.toString(),
+          errorvalue9:"Invalid ZipCode"
+         })
+       }
       }
       else{
         this.setState({
@@ -970,6 +996,8 @@ export default class Afford extends React.Component {
   }
   handleChangeBankruptcyYes(){
     this.setState({
+      yes1:"green",
+      no1:"#ECE9E9",
       bankrupt_data:true,
       showimage11:true,
       index:8,
@@ -978,6 +1006,8 @@ export default class Afford extends React.Component {
   }
   handleChangeBankruptcyNo(){
     this.setState({
+      yes1:"#ECE9E9",
+      no1:"red",
       bankrupt_data:false,
       showimage12:true,
       index:8,
@@ -993,6 +1023,8 @@ export default class Afford extends React.Component {
   }
   handleChangeVeteranYes(){
     this.setState({
+      yes2:"green",
+      no2:"#ECE9E9",
       showimage13:true,
       index:10,
       isVeteran_data:true
@@ -1000,6 +1032,8 @@ export default class Afford extends React.Component {
   }
   handleChangeVeteranNo(){
     this.setState({
+      yes2:"#ECE9E9",
+      no2:"red",
       showimage14:true,
       index:10,
       isVeteran_data:false
@@ -1014,6 +1048,8 @@ export default class Afford extends React.Component {
   }
   handleChangeBorrowYes(){
     this.setState({
+      yes3:"green",
+      no3:"#ECE9E9",
       showimage15:true,
       index:12,
       borrowAddCash_data:true
@@ -1021,6 +1057,8 @@ export default class Afford extends React.Component {
   }
   handleChangeBorrowNo(){
     this.setState({
+      yes3:"#ECE9E9",
+      no3:"red",
       showimage16:true,
       index:12,
       borrowAddCash_data:false
@@ -1401,7 +1439,7 @@ export default class Afford extends React.Component {
                       </View>
                     </View>
                     {this.state.showimage1 == false && this.state.showimage2 == false ? 
-                      <View  style={{alignSelf:"center"}}>
+                      <View  style={{alignSelf:"center",paddingTop:10}}>
                         <Text style={{color:"red"}}>
                           {this.state.errorvalue}
                         </Text>
@@ -1510,7 +1548,7 @@ export default class Afford extends React.Component {
                       </View>
                     </View>
                     {this.state.showimage3 == false && this.state.showimage4 == false && this.state.showimage5 == false  && this.state.showimage6 == false ? 
-                      <View  style={{alignSelf:"center"}}>
+                      <View  style={{alignSelf:"center",marginTop:10}}>
                         <Text style={{color:"red"}}>
                           {this.state.errorvalue1}
                         </Text>
@@ -1619,7 +1657,7 @@ export default class Afford extends React.Component {
                       </View>
                     </View>
                     {this.state.showimage7 == false && this.state.showimage8 == false && this.state.showimage9 == false && this.state.showimage10 == false ? 
-                      <View  style={{alignSelf:"center"}}>
+                      <View  style={{alignSelf:"center",marginTop:10}}>
                         <Text style={{color:"red"}}>
                           {this.state.errorvalue2}
                         </Text>
@@ -1763,13 +1801,13 @@ export default class Afford extends React.Component {
                   </View>
                   <View style={{padding:10}}>
                     <View style={{ width: 130 ,margin:"3%",alignSelf:"center"}} >
-                      <Button block success rounded onPress={this.handleChangeBankruptcyYes.bind(this)}>
-                        <Text style={{fontSize:15}}>{this.state.ques8_text1.Text}</Text>
+                      <Button block style={{backgroundColor:this.state.yes1}} rounded onPress={this.handleChangeBankruptcyYes.bind(this)}>
+                        <Text style={{fontSize:15,color:this.state.yes1=="green"?"white":"black"}}>{this.state.ques8_text1.Text}</Text>
                       </Button>
                     </View>
                     <View style={{ width: 130,margin:"3%",alignSelf:"center"}} >
-                      <Button block danger rounded  onPress={this.handleChangeBankruptcyNo.bind(this)}> 
-                        <Text style={{fontSize:15}}>{this.state.ques8_text2.Text}</Text>
+                      <Button block style={{backgroundColor:this.state.no1}} rounded  onPress={this.handleChangeBankruptcyNo.bind(this)}> 
+                        <Text style={{fontSize:15,color:this.state.no1=="red"?"white":"black"}}>{this.state.ques8_text2.Text}</Text>
                       </Button>
                     </View>
                   </View>
@@ -1854,13 +1892,13 @@ export default class Afford extends React.Component {
                   </View>
                   <View style={{padding:10}}>
                     <View style={{ width: 130 ,margin:"3%",alignSelf:"center"}} >
-                      <Button block success rounded onPress={this.handleChangeVeteranYes.bind(this)}>
-                        <Text style={{fontSize:15}}>{this.state.ques10_text1.Text}</Text>
+                      <Button block style={{backgroundColor:this.state.yes2}} rounded onPress={this.handleChangeVeteranYes.bind(this)}>
+                        <Text style={{fontSize:15,color:this.state.yes2=="green"?"white":"black"this.state.ques10_text1.Text}</Text>
                       </Button>
                     </View>
                     <View style={{ width: 130,margin:"3%",alignSelf:"center"}} >
-                      <Button block danger rounded  onPress={this.handleChangeVeteranNo.bind(this)}> 
-                        <Text style={{fontSize:15}}>{this.state.ques10_text2.Text}</Text>
+                      <Button block style={{backgroundColor:this.state.no2}} rounded  onPress={this.handleChangeVeteranNo.bind(this)}> 
+                        <Text style={{fontSize:15,color:this.state.no2=="red"?"white":"black"}}>{this.state.ques10_text2.Text}</Text>
                       </Button>
                     </View>
                   </View>
@@ -1936,13 +1974,13 @@ export default class Afford extends React.Component {
                   </View>
                   <View style={{padding:10}}>
                     <View style={{ width: 130 ,margin:"3%",alignSelf:"center"}} >
-                      <Button block success rounded onPress={this.handleChangeBorrowYes.bind(this)}>
-                        <Text style={{fontSize:15}}>{this.state.ques12_text1.Text}</Text>
+                      <Button block style={{backgroundColor:this.state.yes3}} rounded onPress={this.handleChangeBorrowYes.bind(this)}>
+                        <Text style={{fontSize:15,color:this.state.yes3=="green"?"white":"black"}}>{this.state.ques12_text1.Text}</Text>
                       </Button>
                     </View>
                     <View style={{ width: 130,margin:"3%",alignSelf:"center"}} >
-                      <Button block danger rounded  onPress={this.handleChangeBorrowNo.bind(this)}> 
-                        <Text style={{fontSize:15}}>{this.state.ques12_text2.Text}</Text>
+                      <Button block style={{backgroundColor:this.state.no3}} rounded  onPress={this.handleChangeBorrowNo.bind(this)}> 
+                        <Text style={{fontSize:15,color:this.state.no3=="red"?"white":"black"}}>{this.state.ques12_text2.Text}</Text>
                       </Button>
                     </View>
                   </View>
@@ -2245,13 +2283,26 @@ export default class Afford extends React.Component {
         <View 
             style={styles.container2}
             > 
+            <View style={{height:120,width:120,backgroundColor:"red",elevation:2}}>
                 <Image
-                style={{height:50,width:50}}
+                style={{height:100,width:100}}
                 source={require('../ic_launcher.png')}
                 />
+                </View>
         </View>
         
       );
+    }
+    else if(this.state.submitting){
+      return(
+      <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+        <View>
+           <Image style={{height:200,width:200}} source={require('../assets/submit1.gif')}
+           />
+        </View>
+        <Text style={{fontSize:24}}>Submitted Successfully </Text>
+      </View>
+      )
     }
     else{
       return (

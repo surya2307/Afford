@@ -320,7 +320,7 @@ async componentWillMount() {
             style={styles.container2}
             > 
                 <Image
-                style={{height:50,width:50}}
+                style={{height:100,width:100}}
                 source={require('./ic_launcher.png')}
                 />
         </View>

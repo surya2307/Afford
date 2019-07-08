@@ -5,7 +5,7 @@ var deviceHeight = Platform.OS === 'android' ? Dimensions.get('screen').height -
 module.exports = StyleSheet.create({
   headerstyles:{
     backgroundColor:"white",
-    marginTop:Platform.OS === 'ios' ? 20 : 0,
+    marginTop:Platform.OS === 'ios' ? 25 : 10,
     height:deviceHeight<=550?50:70,
     elevation: 2,
     marginBottom: 3,
@@ -36,6 +36,7 @@ module.exports = StyleSheet.create({
   },
   container2: {
     flex: 1,
+    elevation: 2,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
@@ -68,6 +69,7 @@ module.exports = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     backgroundColor: "red",
+    opacity:0.8
   },
   terms: {
     height:"100%",
@@ -77,6 +79,7 @@ module.exports = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     backgroundColor: "green",
+    opacity:0.8
   },
   next_btnstyle: {
     borderRadius:10,
