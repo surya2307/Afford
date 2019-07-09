@@ -12,7 +12,7 @@ export default class Privacy extends Component {
   static navigationOptions = {
     header: null
   }
-  render() {
+  render() {   
     return (
       <View style={styles.container}>
         <WebView
@@ -24,7 +24,7 @@ export default class Privacy extends Component {
           <TouchableOpacity style={styles.topbar}
               onPress={() => this.props.navigation.navigate("Afford")}
             >
-            <Text style={{color:"white",fontSize:20}}  >Go Back</Text>
+            <Text style={{color:"white",fontSize:20}}  >Back</Text>
           </TouchableOpacity>
         </View>
       </View>

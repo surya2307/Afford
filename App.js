@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import Afford from './Components/Afford';
  import Privacy from './Components/privacy';
+ import Terms from './Components/Terms';
  import Submit from './Components/submit';
  
 
@@ -319,10 +320,12 @@ async componentWillMount() {
     return <View 
             style={styles.container2}
             > 
+              <View style={{justifyContent:"center",backgroundColor:"#dde3ed",alignItems:"center",height:120,width:120,borderRadius:15,borderColor:"#FFF",imageAlign:"center",elevation:2}}>
                 <Image
                 style={{height:100,width:100}}
                 source={require('./ic_launcher.png')}
                 />
+            </View>
         </View>
         ;
   }
@@ -335,7 +338,8 @@ async componentWillMount() {
 const RootStack = createStackNavigator({
   Afford : {screen : Afford},
   Privacy: { screen: Privacy},
-  Submit: { screen: Submit}
+  Submit: { screen: Submit},
+  Terms: { screen: Terms}
 
 })
 const AppStackNavigator = createAppContainer(RootStack);

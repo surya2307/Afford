@@ -206,7 +206,7 @@ export default class Afford extends React.Component {
     }
   }
   Terms(){
-    this.setState({ mainModal: !this.state.mainModal });
+    this.props.navigation.navigate("Terms")
   }
   Privacy(){
     this.setState({
@@ -392,23 +392,20 @@ export default class Afford extends React.Component {
         method : 'post',
        
       };
-      this.setState({isReady:false,submitting:true,isSubmitting:true});
+      this.setState({isReady:false,isSubmitting:true});
   
         
-        setTimeout(() => {
-          
-
       axios(config).then((response)=>{
         //this.props.navigation.navigate("Submit" )
         console.log(response);  
         this.setState({ 
-          isReady:true,
+          submitting:true,
           index: 0,
           enable_back: false,
           enable_next: true,
           enable_submit:false,
           showimage1:false,
-          isSubmitting:false,
+          
           showimage2:false,
           showimage3:false,
           showimage4:false,
@@ -447,7 +444,7 @@ export default class Afford extends React.Component {
           lname:"",
           phone:"",
           email:"",
-          submitting:false,
+          
           errorvalue:"",
           errorvalue1:"",
           errorvalue2:"",
@@ -473,6 +470,10 @@ export default class Afford extends React.Component {
       }).catch((error) => {
          console.log(error.message);
       })
+      
+        setTimeout(() => {
+          this.setState({isReady:true,isSubmitting:false,submitting:false})          
+
         }, 8000);
       
     }
@@ -1893,7 +1894,7 @@ export default class Afford extends React.Component {
                   <View style={{padding:10}}>
                     <View style={{ width: 130 ,margin:"3%",alignSelf:"center"}} >
                       <Button block style={{backgroundColor:this.state.yes2}} rounded onPress={this.handleChangeVeteranYes.bind(this)}>
-                        <Text style={{fontSize:15,color:this.state.yes2=="green"?"white":"black"this.state.ques10_text1.Text}</Text>
+                        <Text style={{fontSize:15,color:this.state.yes2=="green"?"white":"black"}}>{this.state.ques10_text1.Text}</Text>
                       </Button>
                     </View>
                     <View style={{ width: 130,margin:"3%",alignSelf:"center"}} >
@@ -1915,7 +1916,7 @@ export default class Afford extends React.Component {
               {this.state.index===10 &&
                 <View style={{}}>
                   <View style={{ height: 100, backgroundColor: '',justifyContent: "center"}}>
-                    <View style={{alignContent: 'center'}}>
+                    <View style={{alignContent: 'center',margin:"3%"}}>
                       <Text style={{fontSize:20,fontWeight:"bold",textAlign:"center"}} >
                       {this.state.ques11_ques}
                       </Text>
@@ -2240,41 +2241,17 @@ export default class Afford extends React.Component {
               
                 <TouchableOpacity style={styles.privacy}
                                   onPress={this.PrivacyPolicy.bind(this)}>
-                  <Text style={{color:"white",}}>Privacy Policy</Text>
+                  <Text style={{color:"red",textDecorationLine: "underline"}}>Privacy Policy</Text>
                 </TouchableOpacity>
               
                 <TouchableOpacity style={styles.terms}
                                   onPress={this.Terms.bind(this)}>
-                  <Text style={{color:"white",}}>Terms & Conditions</Text>
+                  <Text style={{color:"green",textDecorationLine: "underline"}}>Terms & Conditions</Text>
                 </TouchableOpacity>
               
             </View>
           </Footer>
-          {this.state.mainModal == true &&
-            <Modal isVisible={this.state.mainModal}>
-              <View style={{ flex: 1,backgroundColor:"#ced7e5" ,width:"100%" }}>
-                <View style={{alignSelf:"center",}}>
-                  <Image
-                    source={require('../assets/main.png')}
-                  />
-                </View>
-                <View style={{}}>
-                  <Text style={{fontSize:15,textAlign:"center",margin:10}} >
-                    *For a Free quote. affordability.io is not associated with the government, and our service is not approved by the government or your lender; and even if you accept this offer and use our services, your lender may not agree to change your loan.    
-                  </Text>
-                  <Text style={{fontSize:15,textAlign:"center",margin:20}} >
-                    Our goal is to provide an easy connection for homeowners seeking information on affordabilityprogram eligibility with a private mortgage broker or attorney who can assist you.
-                  </Text>
-                </View>
-                <View style={{alignSelf:"center",marginTop:40}}>
-                  <Button primary
-                    onPress={this.Dismiss.bind(this)}>
-                    <Text>Dismiss</Text>
-                  </Button>
-                </View>
-              </View>
-            </Modal>
-          }
+          
         </Container>
       );
     }
@@ -2283,12 +2260,13 @@ export default class Afford extends React.Component {
         <View 
             style={styles.container2}
             > 
-            <View style={{height:120,width:120,backgroundColor:"red",elevation:2}}>
+            <View style={{justifyContent:"center",backgroundColor:"#dde3ed",alignItems:"center",height:120,width:120,borderRadius:15,borderColor:"#FFF",imageAlign:"center",elevation:2}}>
                 <Image
                 style={{height:100,width:100}}
                 source={require('../ic_launcher.png')}
                 />
-                </View>
+            </View>
+                
         </View>
         
       );
